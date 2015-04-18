@@ -44,6 +44,11 @@ class GameOfLifeBackground {
 		
 	}
 
+	/**
+	 * Populate the matrix with a random set of cells
+	 *
+	 * @param int $density
+	 */
 	public function randomMatrix($density=350)
 	{
 
@@ -52,6 +57,11 @@ class GameOfLifeBackground {
 		}
 	}
 
+	/**
+	 * Initiate a blank image
+	 *
+	 * @return resource
+	 */
 	private function imageInitiate()
 	{
 		// Create an image canvas
@@ -63,6 +73,11 @@ class GameOfLifeBackground {
 		return $image;
 	}
 
+	/**
+	 * Set the background of an image
+	 *
+	 * @param $image
+	 */
 	private function imageSetBackground($image) {
 
 		// Fetch the colour data
@@ -76,6 +91,11 @@ class GameOfLifeBackground {
 		imagefill($image, 0, 0, $backgroundColor);
 	}
 
+	/**
+	 * Set the background of the image with a hex code
+	 *
+	 * @param $hex
+	 */
 	private function imageSetBackgroundHex($hex)
 	{
 		// Split the hex code into RGB
@@ -90,6 +110,9 @@ class GameOfLifeBackground {
 
 	}
 
+	/**
+	 * Set the background of the images as transparent
+	 */
 	private function imageSetBackgroundTransparent()
 	{
 
@@ -102,7 +125,9 @@ class GameOfLifeBackground {
 
 	}
 
-	// Generate the board
+	/**
+	 * Generate the game of life
+	 */
 	public function generate() {
 
 		// Fill the matrix with a random set of cells
@@ -210,7 +235,15 @@ class GameOfLifeBackground {
 		imagepng($gd);
 		
 		}
-	
+
+	/**
+	 * Determine how many neighbours a cell has
+	 *
+	 * @param $matrix
+	 * @param $x
+	 * @param $y
+	 * @return mixed
+	 */
 	private function number_of_neighbours($matrix,$x,$y) {
 		
 		for($dx=-1;$dx<=1;$dx++) {
