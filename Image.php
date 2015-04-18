@@ -60,4 +60,15 @@ class Image {
 		$this->setBackground(0, 0, 0, 127);
 	}
 
+	/**
+	 * Write the image data to a file
+	 *
+	 * @param $path
+	 */
+	public function write($path)
+	{
+		// Write the image data to a file
+		imagepng($this->resource,$path.".png");
+	}
+
 }
