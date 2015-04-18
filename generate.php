@@ -3,7 +3,7 @@
 
 //generate a Game of Life generation
 
-class gol_gen {
+class GameOfLifeBackground {
 	
 	private $matrix;
 	
@@ -158,7 +158,7 @@ class gol_gen {
 	
 	}
 
-$gol = new gol_gen;
+$gol = new GameOfLifeBackground;
 
 $gol->generate();
 
