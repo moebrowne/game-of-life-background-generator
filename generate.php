@@ -64,7 +64,7 @@ class GameOfLifeBackground {
 	{
 		$this->generations[$generationID] = [
 			'ID' => $generationID,
-			'image' => $this->imageInitiate(),
+			'image' => new Image(),
 			'matrix' => []
 		];
 
@@ -80,7 +80,7 @@ class GameOfLifeBackground {
 		$this->randomMatrix();
 		
 		$matrix_gen = $this->matrix;
-		
+
 		//process the matrix
 		for($generation=0;$generation<$this->generationCount;$generation++) {
 
