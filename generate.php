@@ -92,7 +92,7 @@ class GameOfLifeBackground {
 					
 					$cell_living = (bool)$matrix[$matrix_x][$matrix_y];
 					
-					$neighbours = $this->number_of_neighbours($matrix,$matrix_x,$matrix_y);
+					$neighbours = $this->cellNoNeighbours($matrix,$matrix_x,$matrix_y);
 					
 					$matrix_neighbours[$matrix_x][$matrix_y] = $neighbours;
 					
@@ -162,7 +162,7 @@ class GameOfLifeBackground {
 	 * @param $y
 	 * @return mixed
 	 */
-	private function number_of_neighbours($matrix,$x,$y) {
+	private function cellNoNeighbours($matrix,$x,$y) {
 		
 		for($dx=-1;$dx<=1;$dx++) {
 			for($dy=-1;$dy<=1;$dy++) {
