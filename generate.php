@@ -19,16 +19,26 @@ class GameOfLifeBackground {
 	public $board = [
 		'width' => 2560,
 		'height' => 1024,
+		'rows' => 0,
+		'cols' => 0,
 	];
+
+	// Initialise!
+	function __construct()
+	{
+		// Calculate the number of columns and rows on the board
+		$this->board['rows'] = round($this->board['height']/($this->cells['height']+$this->cells['spacing']));
+		$this->board['cols'] = round($this->board['width']/($this->cells['width']+$this->cells['spacing']));
+		
+	}
+
 
 	// Generate the board
 	public function generate() {
 		
-		$board_cols = round($this->board['width']/($this->cells['width']+$this->cells['spacing']));
-		$board_rows = round($this->board['height']/($this->cells['height']+$this->cells['spacing']));
 		
 		for($i=0;$i<(($this->board['width']*$this->board['height'])/350);$i++) {
-			$matrix[mt_rand(0,$board_cols)][mt_rand(0,$board_rows)] = true;
+			$matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
 			}
 		
 		$matrix_gen = $matrix;
@@ -44,8 +54,8 @@ class GameOfLifeBackground {
 			$color = imagecolorallocatealpha($gd, 0, 0, 0, 127);
 			imagefill($gd, 0, 0, $color);
 			
-			for($matrix_x=0;$matrix_x<$board_cols;$matrix_x++) {
-				for($matrix_y=0;$matrix_y<$board_rows;$matrix_y++) {
+			for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
+				for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
 					
 					$cell_living = (bool)$matrix[$matrix_x][$matrix_y];
 					
@@ -119,8 +129,8 @@ class GameOfLifeBackground {
 		$color = imagecolorallocatealpha($gd, 0, 0, 0, 127);
 		imagefill($gd, 0, 0, $color);
 		
-		for($matrix_x=0;$matrix_x<$board_cols;$matrix_x++) {
-			for($matrix_y=0;$matrix_y<$board_rows;$matrix_y++) {
+		for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
+			for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
 				if($matrix_penultiamte[$matrix_x][$matrix_y]) {
 					
 					$pos_x = ($matrix_x*($this->cells['width']+$this->cells['spacing']));
