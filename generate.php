@@ -11,6 +11,9 @@ class GameOfLifeBackground {
 	// The number of generations to run
 	public $generationCount = 15;
 
+	// An array of generations
+	private $generations = [];
+
 	// Properties of each cell
 	public $cells = [
 		'width' => 13,
@@ -129,6 +132,16 @@ class GameOfLifeBackground {
 
 	}
 
+	private function generationInitiate($generationID)
+	{
+		$this->generations[$generationID] = [
+			'ID' => $generationID,
+			'image' => $this->imageInitiate(),
+		];
+
+		return $this->generations[$generationID];
+	}
+
 	/**
 	 * Generate the game of life
 	 */
@@ -143,7 +156,8 @@ class GameOfLifeBackground {
 		//process the matrix
 		for($generation=0;$generation<$this->generationCount;$generation++) {
 
-			$gd = $this->imageInitiate();
+			// initiate a new generation
+			$generationData = $this->generationInitiate($generation);
 			
 			for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
 				for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
