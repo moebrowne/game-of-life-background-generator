@@ -4,20 +4,24 @@
 //generate a Game of Life generation
 
 class GameOfLifeBackground {
-	
+
+	// The array containing the whole matrix
 	private $matrix = [];
-	
+
+	// Properties of each cell
 	public $cells = [
 		'width' => 13,
 		'height' => 13,
 		'spacing'  => 3,
 	];
-	
+
+	// The size of the board we can draw on
 	public $board = [
 		'width' => 2560,
 		'height' => 1024,
 	];
-		
+
+	// Generate the board
 	public function generate() {
 		
 		$this->board['width'] = 2560;
