@@ -85,7 +85,7 @@ class GameOfLifeBackground {
 			'red' => $r,
 			'green' => $g,
 			'blue' => $b,
-			'alpha' => 127,
+			'alpha' => 0,
 		];
 
 	}
