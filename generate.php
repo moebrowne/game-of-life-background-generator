@@ -11,6 +11,11 @@ class gol_gen {
 		'width' => 13,
 		'height' => 13,
 	];
+	
+	public $board = [
+		'width' => 2560,
+		'height' => 1024,
+	];
 		
 	public function generate() {
 		
@@ -20,18 +25,18 @@ class gol_gen {
 			}
 		*/
 		
-		$board_x = 2560;
-		$board_y = 1024;
+		$this->board['width'] = 2560;
+		$this->board['height'] = 1024;
 		
 		$cell_spacing = 3;
 		
-		$board_cols = round($board_x/($this->cells['width']+$cell_spacing));
-		$board_rows = round($board_y/($this->cells['height']+$cell_spacing)); 
+		$board_cols = round($this->board['width']/($this->cells['width']+$cell_spacing));
+		$board_rows = round($this->board['height']/($this->cells['height']+$cell_spacing)); 
 		
 		//echo "board: ".$board_cols."x".$board_rows;
 		
 		
-		for($i=0;$i<(($board_x*$board_y)/350);$i++) {
+		for($i=0;$i<(($this->board['width']*$this->board['height'])/350);$i++) {
 			$matrix[mt_rand(0,$board_cols)][mt_rand(0,$board_rows)] = true;
 			}
 		
@@ -42,7 +47,7 @@ class gol_gen {
 		for($generation=0;$generation<(int)$_GET['gen'];$generation++) {
 	
 			//write out this generation
-			$gd = imagecreatetruecolor($board_x, $board_y);
+			$gd = imagecreatetruecolor($this->board['width'], $this->board['height']);
 			//$colour = imagecolorallocate($gd, 85, 152, 215);
 			$colour = imagecolorallocatealpha($gd, 85, 152, 215, 100);
 			imagesavealpha($gd, true);
@@ -117,7 +122,7 @@ class gol_gen {
 		
 		file_put_contents("text.xml","<background>".$xml."</background>");
 		
-		$gd = imagecreatetruecolor($board_x, $board_y);
+		$gd = imagecreatetruecolor($this->board['width'], $this->board['height']);
 		imagesavealpha($gd, true);
 		//$colour = imagecolorallocate($gd, 85, 152, 215);
 		$colour = imagecolorallocatealpha($gd, 85, 152, 215, 100);
