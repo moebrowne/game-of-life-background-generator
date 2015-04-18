@@ -8,6 +8,9 @@ class GameOfLifeBackground {
 	// The array containing the whole matrix
 	private $matrix = [];
 
+	// The number of generations to run
+	public $generations = 15;
+
 	// Properties of each cell
 	public $cells = [
 		'width' => 13,
