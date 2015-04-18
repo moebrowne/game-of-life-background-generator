@@ -6,6 +6,11 @@
 class gol_gen {
 	
 	private $matrix;
+	
+	public $cells = [
+		'width' => 13,
+		'height' => 13,
+	];
 		
 	public function generate() {
 		
@@ -18,13 +23,10 @@ class gol_gen {
 		$board_x = 2560;
 		$board_y = 1024;
 		
-		$cell_width = 13;
-		$cell_height = 13;
-		
 		$cell_spacing = 3;
 		
-		$board_cols = round($board_x/($cell_width+$cell_spacing));
-		$board_rows = round($board_y/($cell_height+$cell_spacing)); 
+		$board_cols = round($board_x/($this->cells['width']+$cell_spacing));
+		$board_rows = round($board_y/($this->cells['height']+$cell_spacing)); 
 		
 		//echo "board: ".$board_cols."x".$board_rows;
 		
@@ -65,11 +67,11 @@ class gol_gen {
 							$matrix_gen[$matrix_x][$matrix_y] = true;
 							}
 					
-					$pos_x = ($matrix_x*($cell_width+$cell_spacing));
-					$pos_y = ($matrix_y*($cell_height+$cell_spacing));
+					$pos_x = ($matrix_x*($this->cells['width']+$cell_spacing));
+					$pos_y = ($matrix_y*($this->cells['height']+$cell_spacing));
 					
 					if($cell_living) {
-						imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$cell_width), ($pos_y+$cell_height), $colour);
+						imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
 						}
 					
 					//check there  are still some 'living' cells
@@ -126,10 +128,10 @@ class gol_gen {
 			for($matrix_y=0;$matrix_y<$board_rows;$matrix_y++) {
 				if($matrix_penultiamte[$matrix_x][$matrix_y]) {
 					
-					$pos_x = ($matrix_x*($cell_width+$cell_spacing));
-					$pos_y = ($matrix_y*($cell_height+$cell_spacing));
+					$pos_x = ($matrix_x*($this->cells['width']+$cell_spacing));
+					$pos_y = ($matrix_y*($this->cells['height']+$cell_spacing));
 					
-					imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$cell_width), ($pos_y+$cell_height), $colour);
+					imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
 					//imagesetpixel($gd, $matrix_x,$matrix_y, $colour);
 					}
 				}
