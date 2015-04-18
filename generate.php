@@ -87,28 +87,28 @@ class GameOfLifeBackground {
 			// initiate a new generation
 			$generationData = $this->generationInitiate($generation);
 			
-			for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
-				for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
+			for($matrixX=0;$matrixX<$this->board['cols'];$matrixX++) {
+				for($matrixY=0;$matrixY<$this->board['rows'];$matrixY++) {
 					
-					$cell_living = (bool)$matrix[$matrix_x][$matrix_y];
+					$cellLiving = (bool)$matrix[$matrixX][$matrixY];
 					
-					$neighbours = $this->cellNoNeighbours($matrix,$matrix_x,$matrix_y);
+					$livingNeighbours = $this->cellNoNeighbours($matrix,$matrixX,$matrixY);
 					
-					$matrix_neighbours[$matrix_x][$matrix_y] = $neighbours;
+					$matrix_neighbours[$matrixX][$matrixY] = $livingNeighbours;
 					
-					if($cell_living) {
-						if($neighbours < 2 || $neighbours > 3) {
-							unset($matrix_gen[$matrix_x][$matrix_y]);
+					if($cellLiving) {
+						if($livingNeighbours < 2 || $livingNeighbours > 3) {
+							unset($matrix_gen[$matrixX][$matrixY]);
 							}
 						}
-						else if($neighbours == 3) {
-							$matrix_gen[$matrix_x][$matrix_y] = true;
+						else if($livingNeighbours == 3) {
+							$matrix_gen[$matrixX][$matrixY] = true;
 							}
 					
-					$pos_x = ($matrix_x*($this->cells['width']+$this->cells['spacing']));
-					$pos_y = ($matrix_y*($this->cells['height']+$this->cells['spacing']));
+					$pos_x = ($matrixX*($this->cells['width']+$this->cells['spacing']));
+					$pos_y = ($matrixY*($this->cells['height']+$this->cells['spacing']));
 					
-					if($cell_living) {
+					if($cellLiving) {
 						imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
 						}
 					
