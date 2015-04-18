@@ -19,22 +19,13 @@ class gol_gen {
 		
 	public function generate() {
 		
-		/*
-		for($i=0;$i<50;$i++) {
-			$matrix[$i] = array_fill(0,50,false);
-			}
-		*/
-		
 		$this->board['width'] = 2560;
 		$this->board['height'] = 1024;
 		
 		$cell_spacing = 3;
 		
 		$board_cols = round($this->board['width']/($this->cells['width']+$cell_spacing));
-		$board_rows = round($this->board['height']/($this->cells['height']+$cell_spacing)); 
-		
-		//echo "board: ".$board_cols."x".$board_rows;
-		
+		$board_rows = round($this->board['height']/($this->cells['height']+$cell_spacing));
 		
 		for($i=0;$i<(($this->board['width']*$this->board['height'])/350);$i++) {
 			$matrix[mt_rand(0,$board_cols)][mt_rand(0,$board_rows)] = true;
@@ -48,7 +39,6 @@ class gol_gen {
 	
 			//write out this generation
 			$gd = imagecreatetruecolor($this->board['width'], $this->board['height']);
-			//$colour = imagecolorallocate($gd, 85, 152, 215);
 			$colour = imagecolorallocatealpha($gd, 85, 152, 215, 100);
 			imagesavealpha($gd, true);
 			$color = imagecolorallocatealpha($gd, 0, 0, 0, 127);
