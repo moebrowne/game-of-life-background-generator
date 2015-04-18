@@ -10,6 +10,7 @@ class gol_gen {
 	public $cells = [
 		'width' => 13,
 		'height' => 13,
+		'spacing'  => 3,
 	];
 	
 	public $board = [
@@ -22,10 +23,8 @@ class gol_gen {
 		$this->board['width'] = 2560;
 		$this->board['height'] = 1024;
 		
-		$cell_spacing = 3;
-		
-		$board_cols = round($this->board['width']/($this->cells['width']+$cell_spacing));
-		$board_rows = round($this->board['height']/($this->cells['height']+$cell_spacing));
+		$board_cols = round($this->board['width']/($this->cells['width']+$this->cells['spacing']));
+		$board_rows = round($this->board['height']/($this->cells['height']+$this->cells['spacing']));
 		
 		for($i=0;$i<(($this->board['width']*$this->board['height'])/350);$i++) {
 			$matrix[mt_rand(0,$board_cols)][mt_rand(0,$board_rows)] = true;
@@ -62,8 +61,8 @@ class gol_gen {
 							$matrix_gen[$matrix_x][$matrix_y] = true;
 							}
 					
-					$pos_x = ($matrix_x*($this->cells['width']+$cell_spacing));
-					$pos_y = ($matrix_y*($this->cells['height']+$cell_spacing));
+					$pos_x = ($matrix_x*($this->cells['width']+$this->cells['spacing']));
+					$pos_y = ($matrix_y*($this->cells['height']+$this->cells['spacing']));
 					
 					if($cell_living) {
 						imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
@@ -123,8 +122,8 @@ class gol_gen {
 			for($matrix_y=0;$matrix_y<$board_rows;$matrix_y++) {
 				if($matrix_penultiamte[$matrix_x][$matrix_y]) {
 					
-					$pos_x = ($matrix_x*($this->cells['width']+$cell_spacing));
-					$pos_y = ($matrix_y*($this->cells['height']+$cell_spacing));
+					$pos_x = ($matrix_x*($this->cells['width']+$this->cells['spacing']));
+					$pos_y = ($matrix_y*($this->cells['height']+$this->cells['spacing']));
 					
 					imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
 					//imagesetpixel($gd, $matrix_x,$matrix_y, $colour);
