@@ -80,7 +80,6 @@ class GameOfLifeBackground {
 		$this->randomMatrix();
 		
 		$matrix_gen = $matrix;
-		$matrix_penultiamte = $matrix;
 		
 		//process the matrix
 		for($generation=0;$generation<$this->generationCount;$generation++) {
@@ -142,9 +141,6 @@ class GameOfLifeBackground {
 				";
 				}
 			
-			
-			$matrix_penultiamte = $matrix;
-			
 			$matrix = $matrix_gen;
 			
 			imagepng($gd,"./G/G_".str_pad($generation,3,"0",STR_PAD_LEFT).".png");
@@ -155,31 +151,6 @@ class GameOfLifeBackground {
 			}
 		
 		file_put_contents("text.xml","<background>".$xml."</background>");
-		
-		$gd = imagecreatetruecolor($this->board['width'], $this->board['height']);
-		imagesavealpha($gd, true);
-		//$colour = imagecolorallocate($gd, 85, 152, 215);
-		$colour = imagecolorallocatealpha($gd, 85, 152, 215, 100);
-		$color = imagecolorallocatealpha($gd, 0, 0, 0, 127);
-		imagefill($gd, 0, 0, $color);
-		
-		for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
-			for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
-				if($matrix_penultiamte[$matrix_x][$matrix_y]) {
-					
-					$pos_x = ($matrix_x*($this->cells['width']+$this->cells['spacing']));
-					$pos_y = ($matrix_y*($this->cells['height']+$this->cells['spacing']));
-					
-					imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
-					//imagesetpixel($gd, $matrix_x,$matrix_y, $colour);
-					}
-				}
-			}
-		
-		//var_dump($matrix_neighbours);
-		
-		header('Content-Type: image/png');
-		imagepng($gd);
 		
 		}
 
