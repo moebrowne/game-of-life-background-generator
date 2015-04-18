@@ -94,8 +94,6 @@ class GameOfLifeBackground {
 					
 					$livingNeighbours = $this->cellNoNeighbours($matrix,$matrixX,$matrixY);
 					
-					$matrix_neighbours[$matrixX][$matrixY] = $livingNeighbours;
-					
 					if($cellLiving) {
 						if($livingNeighbours < 2 || $livingNeighbours > 3) {
 							unset($matrix_gen[$matrixX][$matrixY]);
