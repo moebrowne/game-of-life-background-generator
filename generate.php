@@ -90,6 +90,18 @@ class GameOfLifeBackground {
 
 	}
 
+	private function imageSetBackgroundTransparent()
+	{
+
+		$this->image['background'] = [
+			'red' => 0,
+			'green' => 0,
+			'blue' => 0,
+			'alpha' => 127,
+		];
+
+	}
+
 	// Generate the board
 	public function generate() {
 
