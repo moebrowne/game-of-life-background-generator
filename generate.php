@@ -155,15 +155,20 @@ class GameOfLifeBackground {
 		}
 
 	/**
-	 * Determine how many neighbours a cell has
+	 * Look at all the cells surrounding this cell and
+	 * count how many are still alive
 	 *
 	 * @param $matrix
 	 * @param $x
 	 * @param $y
-	 * @return mixed
+	 * @return int
 	 */
 	private function cellNoNeighbours($matrix,$x,$y) {
-		
+
+		// init
+		$neighbours = 0;
+
+		// Loop through each of the surrounding cells
 		for($dx=-1;$dx<=1;$dx++) {
 			for($dy=-1;$dy<=1;$dy++) {
 				//skip the cell we are checking
@@ -175,8 +180,9 @@ class GameOfLifeBackground {
 				
 				}
 			}
-		
-		return $neighbours;
+
+		// Return the number of living neighbours
+		return (int)$neighbours;
 		
 		}
 	
