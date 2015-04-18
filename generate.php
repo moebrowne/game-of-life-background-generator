@@ -32,14 +32,19 @@ class GameOfLifeBackground {
 		
 	}
 
+	public function randomMatrix($density=350)
+	{
+
+		for($i=0;$i<(($this->board['width']*$this->board['height'])/$density);$i++) {
+			$matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
+		}
+	}
 
 	// Generate the board
 	public function generate() {
-		
-		
-		for($i=0;$i<(($this->board['width']*$this->board['height'])/350);$i++) {
-			$matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
-			}
+
+		// Fill the matrix with a random set of cells
+		$this->randomMatrix();
 		
 		$matrix_gen = $matrix;
 		$matrix_penultiamte = $matrix;
