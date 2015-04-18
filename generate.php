@@ -79,7 +79,7 @@ class GameOfLifeBackground {
 		// Fill the matrix with a random set of cells
 		$this->randomMatrix();
 		
-		$matrix_gen = $matrix;
+		$matrix_gen = $this->matrix;
 		
 		//process the matrix
 		for($generation=0;$generation<$this->generationCount;$generation++) {
