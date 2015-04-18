@@ -65,6 +65,7 @@ class GameOfLifeBackground {
 		$this->generations[$generationID] = [
 			'ID' => $generationID,
 			'image' => $this->imageInitiate(),
+			'matrix' => []
 		];
 
 		return $this->generations[$generationID];
