@@ -24,9 +24,6 @@ class GameOfLifeBackground {
 	// Generate the board
 	public function generate() {
 		
-		$this->board['width'] = 2560;
-		$this->board['height'] = 1024;
-		
 		$board_cols = round($this->board['width']/($this->cells['width']+$this->cells['spacing']));
 		$board_rows = round($this->board['height']/($this->cells['height']+$this->cells['spacing']));
 		
