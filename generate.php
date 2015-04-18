@@ -26,6 +26,15 @@ class GameOfLifeBackground {
 		'cols' => 0,
 	];
 
+	private $image = [
+		'background' => [
+			'red' => 0,
+			'green' => 0,
+			'blue' => 0,
+			'alpha' => 0,
+		]
+	];
+
 	// Initialise!
 	function __construct()
 	{
@@ -51,11 +60,20 @@ class GameOfLifeBackground {
 		// Ensure the alpha channel is maintained
 		imagesavealpha($image, true);
 
-		// Set the background of the image
-		$backgroundColor = imagecolorallocatealpha($image, 0, 0, 0, 127);
-		imagefill($image, 0, 0, $backgroundColor);
-
 		return $image;
+	}
+
+	private function imageSetBackground($image) {
+
+		// Fetch the colour data
+		$red = $this->image['background']['red'];
+		$green = $this->image['background']['green'];
+		$blue = $this->image['background']['blue'];
+		$alpha = $this->image['background']['alpha'];
+
+		// Set the background of the image
+		$backgroundColor = imagecolorallocatealpha($image, $red, $green, $blue, $alpha);
+		imagefill($image, 0, 0, $backgroundColor);
 	}
 
 	// Generate the board
