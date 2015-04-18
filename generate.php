@@ -1,4 +1,4 @@
-<?php namespace GoL;
+<?php namespace GameOfLife;
 
 
 //generate a Game of Life generation
