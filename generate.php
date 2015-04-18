@@ -107,7 +107,7 @@ class GameOfLifeBackground {
 					$pos_y = ($matrixY*($this->cells['height']+$this->cells['spacing']));
 					
 					if($cellLiving) {
-						imagefilledrectangle($gd, $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
+						imagefilledrectangle($generationData['image'], $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
 						}
 					
 					//check there  are still some 'living' cells
@@ -141,8 +141,8 @@ class GameOfLifeBackground {
 			
 			$matrix = $matrix_gen;
 			
-			imagepng($gd,"./G/G_".str_pad($generation,3,"0",STR_PAD_LEFT).".png");
-			imagedestroy($gd);
+			imagepng($generationData['image'],"./G/G_".str_pad($generation,3,"0",STR_PAD_LEFT).".png");
+			imagedestroy($generationData['image']);
 			
 			//check there  are still some 'living' cells
 			if($matrix_gen === false) {break;}
