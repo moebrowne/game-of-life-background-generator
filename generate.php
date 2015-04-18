@@ -70,6 +70,10 @@ class GameOfLifeBackground {
 		// Ensure the alpha channel is maintained
 		imagesavealpha($image, true);
 
+		// Set the images background
+		$this->imageSetBackground($image);
+
+		// Return the image resource
 		return $image;
 	}
 
