@@ -71,4 +71,17 @@ class Image {
 		imagepng($this->resource,$path.".png");
 	}
 
+	function __destruct() {
+		$this->destroy();
+	}
+
+	/**
+	 * Cleanup an image resource to free up memory
+	 */
+	public function destroy()
+	{
+		imagedestroy($this->resource);
+		unset($this->resource);
+	}
+
 }
