@@ -9,7 +9,7 @@ class GameOfLifeBackground {
 	private $matrix = [];
 
 	// The number of generations to run
-	public $generations = 15;
+	public $generationCount = 15;
 
 	// Properties of each cell
 	public $cells = [
@@ -141,7 +141,7 @@ class GameOfLifeBackground {
 		$matrix_penultiamte = $matrix;
 		
 		//process the matrix
-		for($generation=0;$generation<$this->generations;$generation++) {
+		for($generation=0;$generation<$this->generationCount;$generation++) {
 
 			$gd = $this->imageInitiate();
 			
