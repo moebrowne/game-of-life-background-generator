@@ -43,6 +43,21 @@ class GameOfLifeBackground {
 		}
 	}
 
+	private function imageInitiate()
+	{
+		// Create an image canvas
+		$image = imagecreatetruecolor($this->board['width'], $this->board['height']);
+
+		// Ensure the alpha channel is maintained
+		imagesavealpha($image, true);
+
+		// Set the background of the image
+		$backgroundColor = imagecolorallocatealpha($image, 0, 0, 0, 127);
+		imagefill($image, 0, 0, $backgroundColor);
+
+		return $image;
+	}
+
 	// Generate the board
 	public function generate() {
 
@@ -53,14 +68,9 @@ class GameOfLifeBackground {
 		$matrix_penultiamte = $matrix;
 		
 		//process the matrix
-		for($generation=0;$generation<(int)$_GET['gen'];$generation++) {
-	
-			//write out this generation
-			$gd = imagecreatetruecolor($this->board['width'], $this->board['height']);
-			$colour = imagecolorallocatealpha($gd, 85, 152, 215, 100);
-			imagesavealpha($gd, true);
-			$color = imagecolorallocatealpha($gd, 0, 0, 0, 127);
-			imagefill($gd, 0, 0, $color);
+		for($generation=0;$generation<$this->generations;$generation++) {
+
+			$gd = $this->imageInitiate();
 			
 			for($matrix_x=0;$matrix_x<$this->board['cols'];$matrix_x++) {
 				for($matrix_y=0;$matrix_y<$this->board['rows'];$matrix_y++) {
