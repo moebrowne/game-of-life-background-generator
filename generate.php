@@ -76,6 +76,20 @@ class GameOfLifeBackground {
 		imagefill($image, 0, 0, $backgroundColor);
 	}
 
+	private function imageSetBackgroundHex($hex)
+	{
+		// Split the hex code into RGB
+		list($r, $g, $b) = sscanf($hex, "#%02x%02x%02x");
+
+		$this->image['background'] = [
+			'red' => $r,
+			'green' => $g,
+			'blue' => $b,
+			'alpha' => 127,
+		];
+
+	}
+
 	// Generate the board
 	public function generate() {
 
