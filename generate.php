@@ -5,7 +5,7 @@
 
 class GameOfLifeBackground {
 	
-	private $matrix;
+	private $matrix = [];
 	
 	public $cells = [
 		'width' => 13,
