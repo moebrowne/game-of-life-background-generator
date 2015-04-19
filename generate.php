@@ -3,6 +3,7 @@
 error_reporting("E_ALL | E_NOTICE");
 
 include "Image.php";
+include "Config.php";
 
 //generate a Game of Life generation
 
@@ -18,30 +19,6 @@ class GameOfLifeBackground {
 
 	// An array of generations
 	private $generations = [];
-
-	// Properties of each cell
-	public $cells = [
-		'width' => 13,
-		'height' => 13,
-		'spacing'  => 3,
-	];
-
-	// The size of the board we can draw on
-	public $board = [
-		'width' => 2560,
-		'height' => 1024,
-		'rows' => 0,
-		'cols' => 0,
-	];
-
-	private $image = [
-		'background' => [
-			'red' => 0,
-			'green' => 0,
-			'blue' => 0,
-			'alpha' => 0,
-		]
-	];
 
 	// Initialise!
 	function __construct()
@@ -189,6 +166,25 @@ class GameOfLifeBackground {
 		}
 	
 	}
+
+
+// Configure!
+$configBoard = new Config();
+$configBoard->setData('width', 2560);
+$configBoard->setData('height', 1024);
+
+$configImage = new Config();
+$configImage->setData('background', [
+	'R' => 0,
+	'G' => 0,
+	'B' => 0,
+	'A' => 127,
+]);
+
+$configCell = new Config();
+$configCell->setData('width', 13);
+$configCell->setData('height', 13);
+$configCell->setData('padding', 3);
 
 $gol = new GameOfLifeBackground;
 
