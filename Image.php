@@ -81,7 +81,7 @@ class Image {
 	 * @param $blue
 	 * @param $alpha
 	 */
-	private function setCellColour($red,$green,$blue,$alpha) {
+	public function setCellColour($red,$green,$blue,$alpha) {
 
 		// Set the cell colour
 		Config::setData('cellColour', imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha));
