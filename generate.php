@@ -1,6 +1,6 @@
 <?php namespace GameOfLife;
 
-error_reporting("E_ALL | E_NOTICE");
+error_reporting(E_ALL & ~E_NOTICE);
 
 include "Image.php";
 include "Config.php";
@@ -123,7 +123,7 @@ class GameOfLifeBackground {
 			$this->matrix = $matrixTemp;
 
 			$generationData['image']->write("./G/G_".str_pad($generationData['ID'],3,"0",STR_PAD_LEFT));
-			$generationData['image']->destory();
+			$generationData['image']->destroy();
 			
 			//check there  are still some 'living' cells
 			if($matrixTemp === false) {break;}
