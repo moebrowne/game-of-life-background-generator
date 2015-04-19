@@ -24,8 +24,8 @@ class GameOfLifeBackground {
 	function __construct()
 	{
 		// Calculate the number of columns and rows on the board
-		$this->board['rows'] = round($this->board['height']/($this->cells['height']+$this->cells['spacing']));
-		$this->board['cols'] = round($this->board['width']/($this->cells['width']+$this->cells['spacing']));
+		Config::setData('boardRows', round(Config::getData('boardHeight')/(Config::getData('cellHeight')+Config::getData('cellSpacing'))));
+		Config::setData('boardCols', round(Config::getData('boardWidth')/(Config::getData('cellWidth')+Config::getData('cellSpacing'))));
 		
 	}
 
@@ -37,8 +37,8 @@ class GameOfLifeBackground {
 	public function randomMatrix($density=350)
 	{
 
-		for($i=0;$i<(($this->board['width']*$this->board['height'])/$density);$i++) {
-			$this->matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
+		for($i=0;$i<((Config::getData('boardWidth')*Config::getData('boardHeight'))/$density);$i++) {
+			$this->matrix[mt_rand(0,Config::getData('boardCols'))][mt_rand(0,Config::getData('boardRows'))] = true;
 		}
 	}
 
@@ -46,7 +46,7 @@ class GameOfLifeBackground {
 	{
 		$this->generations[$generationID] = [
 			'ID' => $generationID,
-			'image' => new Image($this->board['width'], $this->board['height'], $this->cells['width'], $this->cells['height'], $this->cells['spacing']),
+			'image' => new Image(),
 		];
 
 		return $this->generations[$generationID];
@@ -68,8 +68,8 @@ class GameOfLifeBackground {
 			// initiate a new generation
 			$generationData = $this->generationInitiate($generation);
 			
-			for($matrixX=0;$matrixX<$this->board['cols'];$matrixX++) {
-				for($matrixY=0;$matrixY<$this->board['rows'];$matrixY++) {
+			for($matrixX=0;$matrixX<Config::getData('boardCols');$matrixX++) {
+				for($matrixY=0;$matrixY<Config::getData('boardRows');$matrixY++) {
 					
 					$cellLiving = (bool)$this->matrix[$matrixX][$matrixY];
 					
@@ -84,8 +84,8 @@ class GameOfLifeBackground {
 							$matrixTemp[$matrixX][$matrixY] = true;
 							}
 					
-					$pos_x = ($matrixX*($this->cells['width']+$this->cells['spacing']));
-					$pos_y = ($matrixY*($this->cells['height']+$this->cells['spacing']));
+					$pos_x = ($matrixX*(Config::getData('cellWidth')+Config::getData('cellSpacing')));
+					$pos_y = ($matrixY*(Config::getData('cellHeight')+Config::getData('cellSpacing')));
 					
 					if($cellLiving) {
 						$generationData['image']->renderCell($pos_x, $pos_y);
@@ -169,22 +169,20 @@ class GameOfLifeBackground {
 
 
 // Configure!
-$configBoard = new Config();
-$configBoard->setData('width', 2560);
-$configBoard->setData('height', 1024);
+Config::setData('boardWidth', 2560);
+Config::setData('boardHeight', 1024);
 
-$configImage = new Config();
-$configImage->setData('background', [
+Config::setData('boardWidth', 2560);
+Config::setData('background', [
 	'R' => 0,
 	'G' => 0,
 	'B' => 0,
 	'A' => 127,
 ]);
 
-$configCell = new Config();
-$configCell->setData('width', 13);
-$configCell->setData('height', 13);
-$configCell->setData('padding', 3);
+Config::setData('cellWidth', 13);
+Config::setData('cellHeight', 13);
+Config::setData('cellSpacing', 3);
 
 $gol = new GameOfLifeBackground;
 

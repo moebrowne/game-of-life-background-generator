@@ -3,24 +3,24 @@
 
 class Config {
 
-	public $data = [];
+	public static $data;
 
 	/**
 	 * @param $key
 	 * @return mixed array
 	 */
-	public function getData($key)
+	public static function getData($key)
 	{
-		return $this->data[$key];
+		return self::$data[$key];
 	}
 
 	/**
 	 * @param $key
 	 * @param mixed $data
 	 */
-	public function setData($key, $data)
+	public static function setData($key, $data)
 	{
-		$this->data[$key] = $data;
+		self::$data[$key] = $data;
 	}
 
 

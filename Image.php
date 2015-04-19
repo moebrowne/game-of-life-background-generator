@@ -5,29 +5,12 @@ class Image {
 
 	private $resource;
 
-	private $width;
-	private $height;
-
-	private $cellColour;
-	private $cellWidth;
-	private $cellHeight;
-	private $cellSpacing;
-
 	/**
 	 * Initiate a blank image
-	 * @param $width
-	 * @param $height
-	 * @param $cellWidth
-	 * @param $cellHeight
-	 * @param $cellSpacing
+	 *
 	 */
-	 function __construct($width, $height, $cellWidth, $cellHeight, $cellSpacing)
+	 function __construct()
 	{
-		$this->width = $width;
-		$this->height = $height;
-		$this->cellWidth = $cellWidth;
-		$this->cellHeight = $cellHeight;
-		$this->cellSpacing = $cellSpacing;
 
 		$this->create();
 	}
@@ -35,7 +18,7 @@ class Image {
 	private function create() {
 
 		// Create an image canvas
-		$this->resource = imagecreatetruecolor($this->width, $this->height);
+		$this->resource = imagecreatetruecolor(Config::getData('boardWidth'), Config::getData('boardHeight'));
 
 		// Ensure the alpha channel is maintained
 		imagesavealpha($this->resource, true);
@@ -48,7 +31,7 @@ class Image {
 	{
 		echo "Rendering $x $y
 ";
-		imagefilledrectangle($this->resource, $x, $y, ($x+$this->cellWidth), ($y+$this->cellHeight), $this->cellColour);
+		imagefilledrectangle($this->resource, $x, $y, ($x+Config::getData('cellWidth')), ($y+Config::getData('cellHeight')), Config::getData('cellColour'));
 	}
 
 	/**
@@ -101,7 +84,7 @@ class Image {
 	private function setCellColour($red,$green,$blue,$alpha) {
 
 		// Set the cell colour
-		$this->cellColour = imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha);
+		Config::setData('cellColour', imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha));
 	}
 
 	/**
