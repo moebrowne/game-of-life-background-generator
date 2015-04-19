@@ -137,10 +137,10 @@ class GameOfLifeBackground {
 	 * Look at all the cells surrounding this cell and
 	 * count how many are still alive
 	 *
-	 * @param $matrix
 	 * @param $x
 	 * @param $y
 	 * @return int
+	 * @internal param $matrix
 	 */
 	private function cellNoNeighbours($x,$y) {
 
@@ -172,7 +172,6 @@ class GameOfLifeBackground {
 Config::setData('boardWidth', 2560);
 Config::setData('boardHeight', 1024);
 
-Config::setData('boardWidth', 2560);
 Config::setData('background', [
 	'R' => 0,
 	'G' => 0,
