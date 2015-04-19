@@ -42,16 +42,6 @@ class GameOfLifeBackground {
 		}
 	}
 
-	private function generationInitiate($generationID)
-	{
-		$this->generations[$generationID] = [
-			'ID' => $generationID,
-			'image' => new Image(),
-		];
-
-		return $this->generations[$generationID];
-	}
-
 	/**
 	 * Generate the game of life
 	 */
@@ -63,10 +53,10 @@ class GameOfLifeBackground {
 		$matrixTemp = $this->matrix;
 
 		//process the matrix
-		for($generation=0;$generation<$this->generationCount;$generation++) {
+		for($generationNum=0;$generationNum<$this->generationCount;$generationNum++) {
 
 			// initiate a new generation
-			$generationData = $this->generationInitiate($generation);
+			$generationImage = new Image();
 			
 			for($matrixX=0;$matrixX<Config::getData('boardCols');$matrixX++) {
 				for($matrixY=0;$matrixY<Config::getData('boardRows');$matrixY++) {
@@ -88,7 +78,7 @@ class GameOfLifeBackground {
 					$pos_y = ($matrixY*(Config::getData('cellHeight')+Config::getData('cellSpacing')));
 					
 					if($cellLiving) {
-						$generationData['image']->renderCell($pos_x, $pos_y);
+						$generationImage->renderCell($pos_x, $pos_y);
 						}
 					
 					//check there  are still some 'living' cells
@@ -101,29 +91,29 @@ class GameOfLifeBackground {
 			
 			//write the XML
 			
-			if($generation > 2) {
+			if($generationNum > 2) {
 				$this->xml .= "
 				<static>
 					<duration>7</duration>
-					<file>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generation-2),3,"0",STR_PAD_LEFT).".png</file>
+					<file>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</file>
 				</static>
 				";
 				}
 			
-			if($generation > 3) {
+			if($generationNum > 3) {
 				$this->xml .= "
 				<transition>
 					<duration>1</duration>
-					<from>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generation-2),3,"0",STR_PAD_LEFT).".png</from>
-					<to>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generation-1),3,"0",STR_PAD_LEFT).".png</to>
+					<from>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</from>
+					<to>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-1),3,"0",STR_PAD_LEFT).".png</to>
 				</transition>
 				";
 				}
 
 			$this->matrix = $matrixTemp;
 
-			$generationData['image']->write("./G/G_".str_pad($generationData['ID'],3,"0",STR_PAD_LEFT));
-			$generationData['image']->destroy();
+			$generationImage->write("./G/G_".str_pad($generationNum,3,"0",STR_PAD_LEFT));
+			$generationImage->destroy();
 			
 			//check there  are still some 'living' cells
 			if($matrixTemp === false) {break;}
