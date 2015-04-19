@@ -95,7 +95,7 @@ class GameOfLifeBackground {
 				$this->xml .= "
 				<static>
 					<duration>7</duration>
-					<file>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</file>
+					<file>".Config::getData('ImagesPath')."/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</file>
 				</static>
 				";
 				}
@@ -104,8 +104,8 @@ class GameOfLifeBackground {
 				$this->xml .= "
 				<transition>
 					<duration>1</duration>
-					<from>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</from>
-					<to>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generationNum-1),3,"0",STR_PAD_LEFT).".png</to>
+					<from>".Config::getData('ImagesPath')."/G_".str_pad(($generationNum-2),3,"0",STR_PAD_LEFT).".png</from>
+					<to>".Config::getData('ImagesPath')."/G_".str_pad(($generationNum-1),3,"0",STR_PAD_LEFT).".png</to>
 				</transition>
 				";
 				}
