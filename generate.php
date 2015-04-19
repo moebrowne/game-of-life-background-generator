@@ -112,14 +112,14 @@ class GameOfLifeBackground {
 
 			$this->matrix = $matrixTemp;
 
-			$generationImage->write("./G/G_".str_pad($generationNum,3,"0",STR_PAD_LEFT));
+			$generationImage->write(Config::getData('ImagesPath')."/G_".str_pad($generationNum,3,"0",STR_PAD_LEFT));
 			$generationImage->destroy();
 			
 			//check there  are still some 'living' cells
 			if($matrixTemp === false) {break;}
 			}
 		
-		file_put_contents("text.xml","<background>".$this->xml."</background>");
+		file_put_contents(Config::getData('XMLPath'), "<background>".$this->xml."</background>");
 		
 		}
 
@@ -172,6 +172,11 @@ Config::setData('background', [
 Config::setData('cellWidth', 13);
 Config::setData('cellHeight', 13);
 Config::setData('cellSpacing', 3);
+
+Config::setData('XMLPath', './background.xml');
+
+Config::setData('ImagesPath', './G');
+
 
 $gol = new GameOfLifeBackground;
 
