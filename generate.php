@@ -1,5 +1,8 @@
 <?php namespace GameOfLife;
 
+error_reporting("E_ALL | E_NOTICE");
+
+include "Image.php";
 
 //generate a Game of Life generation
 
@@ -7,6 +10,8 @@ class GameOfLifeBackground {
 
 	// The array containing the whole matrix
 	private $matrix = [];
+
+	private $xml = "";
 
 	// The number of generations to run
 	public $generationCount = 15;
@@ -56,7 +61,7 @@ class GameOfLifeBackground {
 	{
 
 		for($i=0;$i<(($this->board['width']*$this->board['height'])/$density);$i++) {
-			$matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
+			$this->matrix[mt_rand(0,$this->board['cols'])][mt_rand(0,$this->board['rows'])] = true;
 		}
 	}
 
@@ -64,8 +69,7 @@ class GameOfLifeBackground {
 	{
 		$this->generations[$generationID] = [
 			'ID' => $generationID,
-			'image' => new Image(),
-			'matrix' => []
+			'image' => new Image($this->board['width'], $this->board['height'], $this->cells['width'], $this->cells['height'], $this->cells['spacing']),
 		];
 
 		return $this->generations[$generationID];
@@ -79,7 +83,7 @@ class GameOfLifeBackground {
 		// Fill the matrix with a random set of cells
 		$this->randomMatrix();
 		
-		$matrix_gen = $this->matrix;
+		$matrixTemp = $this->matrix;
 
 		//process the matrix
 		for($generation=0;$generation<$this->generationCount;$generation++) {
@@ -90,38 +94,38 @@ class GameOfLifeBackground {
 			for($matrixX=0;$matrixX<$this->board['cols'];$matrixX++) {
 				for($matrixY=0;$matrixY<$this->board['rows'];$matrixY++) {
 					
-					$cellLiving = (bool)$matrix[$matrixX][$matrixY];
+					$cellLiving = (bool)$this->matrix[$matrixX][$matrixY];
 					
-					$livingNeighbours = $this->cellNoNeighbours($matrix,$matrixX,$matrixY);
+					$livingNeighbours = $this->cellNoNeighbours($matrixX,$matrixY);
 					
 					if($cellLiving) {
 						if($livingNeighbours < 2 || $livingNeighbours > 3) {
-							unset($matrix_gen[$matrixX][$matrixY]);
+							unset($matrixTemp[$matrixX][$matrixY]);
 							}
 						}
 						else if($livingNeighbours == 3) {
-							$matrix_gen[$matrixX][$matrixY] = true;
+							$matrixTemp[$matrixX][$matrixY] = true;
 							}
 					
 					$pos_x = ($matrixX*($this->cells['width']+$this->cells['spacing']));
 					$pos_y = ($matrixY*($this->cells['height']+$this->cells['spacing']));
 					
 					if($cellLiving) {
-						imagefilledrectangle($generationData['image'], $pos_x, $pos_y, ($pos_x+$this->cells['width']), ($pos_y+$this->cells['height']), $colour);
+						$generationData['image']->renderCell($pos_x, $pos_y);
 						}
 					
 					//check there  are still some 'living' cells
-					if($matrix_gen === false) {break;}
+					if($matrixTemp === false) {break;}
 					
 					}
 				//check there  are still some 'living' cells
-				if($matrix_gen === false) {break;}
+				if($matrixTemp === false) {break;}
 				}
 			
 			//write the XML
 			
 			if($generation > 2) {
-				$xml .= "
+				$this->xml .= "
 				<static>
 					<duration>7</duration>
 					<file>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generation-2),3,"0",STR_PAD_LEFT).".png</file>
@@ -130,7 +134,7 @@ class GameOfLifeBackground {
 				}
 			
 			if($generation > 3) {
-				$xml .= "
+				$this->xml .= "
 				<transition>
 					<duration>1</duration>
 					<from>/home/oliver/WEBSITE/uplyme.com/GOL/G/G_".str_pad(($generation-2),3,"0",STR_PAD_LEFT).".png</from>
@@ -138,17 +142,17 @@ class GameOfLifeBackground {
 				</transition>
 				";
 				}
-			
-			$matrix = $matrix_gen;
-			
-			imagepng($generationData['image'],"./G/G_".str_pad($generation,3,"0",STR_PAD_LEFT).".png");
-			imagedestroy($generationData['image']);
+
+			$this->matrix = $matrixTemp;
+
+			$generationData['image']->write("./G/G_".str_pad($generationData['ID'],3,"0",STR_PAD_LEFT));
+			$generationData['image']->destory();
 			
 			//check there  are still some 'living' cells
-			if($matrix_gen === false) {break;}
+			if($matrixTemp === false) {break;}
 			}
 		
-		file_put_contents("text.xml","<background>".$xml."</background>");
+		file_put_contents("text.xml","<background>".$this->xml."</background>");
 		
 		}
 
@@ -161,7 +165,7 @@ class GameOfLifeBackground {
 	 * @param $y
 	 * @return int
 	 */
-	private function cellNoNeighbours($matrix,$x,$y) {
+	private function cellNoNeighbours($x,$y) {
 
 		// init
 		$neighbours = 0;
@@ -172,7 +176,7 @@ class GameOfLifeBackground {
 				//skip the cell we are checking
 				if($dx == 0 && $dy == 0) {continue;}
 				
-				if($matrix[($x+$dx)][($y+$dy)]) {
+				if($this->matrix[($x+$dx)][($y+$dy)]) {
 					$neighbours++;
 					}
 				
