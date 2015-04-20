@@ -17,9 +17,6 @@ class GameOfLifeBackground {
 	// The number of generations to run
 	public $generationCount = 15;
 
-	// An array of generations
-	private $generations = [];
-
 	// Initialise!
 	function __construct()
 	{
