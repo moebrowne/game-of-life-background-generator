@@ -23,6 +23,10 @@ class GameOfLifeBackground {
 	// Initialise!
 	function __construct()
 	{
+
+		// Empty the image directory
+		array_map('unlink', glob(Config::getData('ImagesPath')."/*.*"));
+
 		// Calculate the number of columns and rows on the board
 		Config::setData('boardRows', round(Config::getData('boardHeight')/(Config::getData('cellHeight')+Config::getData('cellSpacing'))));
 		Config::setData('boardCols', round(Config::getData('boardWidth')/(Config::getData('cellWidth')+Config::getData('cellSpacing'))));
