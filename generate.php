@@ -57,6 +57,7 @@ class GameOfLifeBackground {
 
 			// initiate a new generation
 			$generationImage = new Image();
+			$generationImage->setCellColour();
 			
 			for($matrixX=0;$matrixX<Config::getData('boardCols');$matrixX++) {
 				for($matrixY=0;$matrixY<Config::getData('boardRows');$matrixY++) {
@@ -172,6 +173,12 @@ Config::setData('background', [
 Config::setData('cellWidth', 13);
 Config::setData('cellHeight', 13);
 Config::setData('cellSpacing', 3);
+Config::setData('cellColour', [
+	'R' => 85,
+	'G' => 152,
+	'B' => 215,
+	'A' => 100,
+]);
 
 Config::setData('XMLPath', './background.xml');
 
