@@ -5,12 +5,20 @@ class Image {
 
 	private $resource;
 
-	/**
-	 * Initiate a blank image
-	 *
-	 */
-	 function __construct()
+    protected $width;
+    protected $height;
+
+    const IMAGE_PATH = 'G';
+
+    /**
+     * Initiate a blank image
+     * @param int $width
+     * @param int $height
+     */
+	 function __construct($width, $height)
 	{
+        $this->width = $width;
+        $this->height = $height;
 
 		$this->create();
 	}
@@ -18,7 +26,7 @@ class Image {
 	private function create() {
 
 		// Create an image canvas
-		$this->resource = imagecreatetruecolor(Config::getData('boardWidth'), Config::getData('boardHeight'));
+		$this->resource = imagecreatetruecolor($this->width, $this->height);
 
 		// Ensure the alpha channel is maintained
 		imagesavealpha($this->resource, true);
@@ -27,11 +35,13 @@ class Image {
 
 	}
 
-	public function renderCell($x, $y)
+	public function renderCell(Cell $cell)
 	{
-		echo "Rendering $x $y
-";
-		imagefilledrectangle($this->resource, $x, $y, ($x+Config::getData('cellWidth')), ($y+Config::getData('cellHeight')), Config::getData('cellColour'));
+        $y = $cell->getPositionX() * (Cell::WIDTH + Cell::SPACING);
+        $x = $cell->getPositionY() * (Cell::HEIGHT + Cell::SPACING);
+
+        $colourResource = imagecolorallocatealpha($this->resource, $cell->colour['R'], $cell->colour['G'], $cell->colour['B'], $cell->colour['A']);
+		imagefilledrectangle($this->resource, $x, $y, ($x + Cell::WIDTH), ($y + Cell::HEIGHT), $colourResource);
 	}
 
 	/**
@@ -42,25 +52,26 @@ class Image {
 	 * @param $blue
 	 * @param $alpha
 	 */
-	private function setBackground($red,$green,$blue,$alpha) {
+	private function setBackground($red, $green, $blue, $alpha) {
 
 		// Set the background of the image
 		$backgroundColor = imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha);
 		imagefill($this->resource, 0, 0, $backgroundColor);
 	}
 
-	/**
-	 * Set the background of the image with a hex code
-	 *
-	 * @param $hex
-	 */
-	public function setBackgroundHex($hex)
+    /**
+     * Set the background of the image with a hex code
+     *
+     * @param $hex
+     * @param int $alpha
+     */
+	public function setBackgroundHex($hex, $alpha = 0)
 	{
 		// Split the hex code into RGB
 		list($red, $green, $blue) = sscanf($hex, "#%02x%02x%02x");
 
 		// Pass the RGBA data to the background setter
-		$this->setBackground($red, $green, $blue, 0);
+		$this->setBackground($red, $green, $blue, $alpha);
 
 	}
 
@@ -74,35 +85,6 @@ class Image {
 	}
 
 	/**
-	 * Set the colour of the cells
-	 *
-	 * @param $red
-	 * @param $green
-	 * @param $blue
-	 * @param $alpha
-	 */
-	public function setCellColour($red,$green,$blue,$alpha) {
-
-		// Set the cell colour
-		Config::setData('cellColour', imagecolorallocatealpha($this->resource, $red, $green, $blue, $alpha));
-	}
-
-	/**
-	 * Set the colour of the cells with a hex code
-	 *
-	 * @param $hex
-	 */
-	public function setCellColourHex($hex)
-	{
-		// Split the hex code into RGB
-		list($red, $green, $blue) = sscanf($hex, "#%02x%02x%02x");
-
-		// Pass the RGBA data to the cell colour setter
-		$this->setCellColour($red, $green, $blue, 0);
-
-	}
-
-	/**
 	 * Write the image data to a file
 	 *
 	 * @param $path
@@ -110,20 +92,7 @@ class Image {
 	public function write($path)
 	{
 		// Write the image data to a file
-		imagepng($this->resource,$path.".png");
-	}
-
-	function __destruct() {
-		$this->destroy();
-	}
-
-	/**
-	 * Cleanup an image resource to free up memory
-	 */
-	public function destroy()
-	{
-		imagedestroy($this->resource);
-		unset($this->resource);
+		imagepng($this->resource, $path.".png");
 	}
 
 }
